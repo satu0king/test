@@ -15,10 +15,6 @@
 
 using namespace std;
 
-int main() {
-  std::cout << "Hello World!\n";
-}
-
 mutex print_mutex;
 void print(string msg) {
   lock_guard<mutex> lock(print_mutex);

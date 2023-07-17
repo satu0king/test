@@ -68,6 +68,46 @@ struct semaphore {
 
 
 
+void fio() {
+    ofstream fout;
+    barrier_test b1;
+ 
+    // by default ios::out mode, automatically deletes
+    // the content of file. To append the content, open in ios:app
+    // fout.open("sample.txt", ios::app)
+    fout.open("sample.txt", ios::app);
+    if(fout) {
+      fout <<"HELLO WORLD\n";
+      fout <<"YOLA WORLD\n";
+      fout <<"HELLO WORLD\n";
+      fout <<"YOLA WORLD\n";
+      fout.close();
+    }
+
+    ifstream fin;
+    fin.open("sample.txt");
+    string a;
+    getline(fin, a);
+    cout << a << endl;
+    fin >> a;
+    cout << a << endl;
+
+    ofstream wf("student.dat", ios::out | ios::binary);
+     wf.write((char *) &b1, sizeof(b1));
+
+    ifstream rf("student.dat", ios::in | ios::binary);
+    for(int i = 0; i < 3; i++)
+        rf.read((char *) &b1, sizeof(barrier_test));
+
+
+    // ios::trunc mode delete all content before open
+    fstream fio;
+    fio.open("sample.txt", ios::trunc | ios::out | ios::in);
+
+    // point read pointer at beginning of file
+    fio.seekg(0, ios::beg);
+}
+
 std::mutex mu1;
 std::mutex mu2;
 std::condition_variable cv1;
